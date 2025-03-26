@@ -1,8 +1,8 @@
-# Data-Analyst-Emmanuel
-# 📌Project title
+## Data-Analyst-Emmanuel
+## 📌Project title
 Design and Implementation of a Data Analytic Platform (DAP) on AWS for the City of Vancouver
 
-# 📝Project Description
+## 📝Project Description
 This project showcases the end-to-end development of a Data Analytic Platform (DAP) hosted on Amazon Web Services (AWS) to support the City of Vancouver’s transition to a cloud-based analytics infrastructure. The dataset analyzed includes employee remuneration and expenses for individuals earning over $75,000 annually. The platform enables descriptive analysis of salary trends and expenditures, particularly within the engineering services department, using a structured ETL pipeline.
 
 The implementation involves:
@@ -17,7 +17,7 @@ The implementation involves:
 
 ✅ Each step includes configuration, screenshots, and justification for choices, aiming for scalability, accuracy, and performance.
 
-# 🎯 Project Objective
+## 🎯 Project Objective
 To build a scalable, secure, and cost-effective cloud-based Data Analytic Platform on AWS that enables the City of Vancouver to perform descriptive analytics on employee compensation data. The platform facilitates data-driven insights by automating data ingestion, cleaning, cataloging, and summarization processes using AWS-native tools.
 
 ## 🗂️ Dataset Description
@@ -241,6 +241,7 @@ Data Summarization marks the final and crucial step in the Data Analytic Platfor
 In this project, AWS Glue Visual ETL (Extract, Transform, Load) was employed to perform these summarization tasks through a user-friendly interface without writing code. The outputs were stored in a curated S3 bucket named city-van-data-cur-emma, representing the final, analysis-ready dataset.
 
   # 🧱 Process Overview
+  
     # 📤 1. Dataset Retrieval
 The summarization process began by retrieving the cleaned dataset from the AWS Glue Data Catalog, which ensured that the most up-to-date and validated version of the data was being used. This seamless integration with Data Catalog supports schema enforcement, data lineage tracking, and compatibility with transformation tools.
 
@@ -250,7 +251,7 @@ Before applying aggregation, the schema was reviewed and optimized:
   - The dataset was filtered to include only records between the years 2020 and 2023, focusing the analysis on recent and relevant trends.
 These preprocessing steps reduced data redundancy and improved clarity in the final report.
 
-    # 🧮 3. Aggregation and Transformation
+        # 🧮 3. Aggregation and Transformation
 Using AWS Glue’s Visual ETL interface, the following summarization steps were performed:
   - Group By Year – The dataset was grouped by the Year field to analyze trends over time.
 
@@ -260,7 +261,7 @@ Aggregate Columns:
 A Timestamp column was added dynamically to record the exact time the data was summarized, which helps in tracking data currency and processing frequency.
 These transformations resulted in a concise, year-wise summary that captures essential financial trends across the selected period.
 
-    # 📦 4. Output Formatting and Storage
+        # 📦 4. Output Formatting and Storage
 To ensure the output is both system- and user-friendly, the summarized dataset was exported in two formats:
   - Parquet (with Snappy Compression): Used for internal system processing
                                        Offers better performance for large-scale queries
@@ -281,9 +282,13 @@ To ensure the output is both system- and user-friendly, the summarized dataset w
   ![Screenshot (29)](https://github.com/user-attachments/assets/86ef2a5c-b8b3-444b-93d5-653f531c3b37)
   Figure 1.10: A Summarized Data Report for Users 
   ![Screenshot (30)](https://github.com/user-attachments/assets/ac1f069d-9e3d-4c05-b76b-df95f4962f69)
+Note: Figure 1.8 illustrates the complete Visual ETL pipeline; Figures 1.9 and 1.10 display the resulting summarized datasets for both system integration and user viewing.
 
+The successful design and implementation of the Data Analytic Platform (DAP) on AWS for the City of Vancouver demonstrates the effectiveness of cloud-native tools in enabling scalable, secure, and cost-efficient data analytics solutions. By leveraging services such as Amazon S3, AWS Glue DataBrew, AWS Glue Data Catalog, and AWS Glue Visual ETL, this project established a structured ETL pipeline that transforms raw municipal data into actionable insights.
 
+Each stage—from data ingestion to summarization—was strategically planned and executed to ensure data integrity, performance optimization, and analytical readiness. The platform not only supports descriptive analysis on employee remuneration and expenses but also provides a foundation for future enhancements such as real-time analytics, dashboard integration, or predictive modeling.
 
+Ultimately, this project highlights how governments and organizations can adopt cloud technologies to improve decision-making, transparency, and data accessibility—laying the groundwork for a more data-driven public service.
 
 ## 🧱 Platform Architecture
 
