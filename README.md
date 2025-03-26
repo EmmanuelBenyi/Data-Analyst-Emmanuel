@@ -365,6 +365,62 @@ Figure 2.12: Replication Rules enabled in S3 curated bucket (city-van -data-cur-
 
 Note: Figures 2.3 to 2.12 are screenshoots from my AWS Console illustrating the IAM roles, S3 bucket policies, encryption settings, versioning status, and replication rules configured throughout the platform.
 
+These security configurations not only comply with cloud data protection standards but also align with the City of Vancouver’s need for confidentiality, integrity, and availability of sensitive employee data. The layered security approach ensures that data is protected across all touchpoints—making the platform trustworthy and enterprise-ready.
+
+### 🧭 DATA GOVERNANCE
+Data governance is a foundational pillar of any reliable data platform, ensuring that data is accurate, consistent, discoverable, secure, and trustworthy across its lifecycle. In the context of this project, implementing strong data governance practices was essential for enabling informed decision-making and fostering confidence in the analytics outcomes delivered to the City of Vancouver.
+
+# 📚 Metadata Management with AWS Glue Data Catalog
+At the heart of this governance strategy is the use of AWS Glue Data Catalog to manage and organize metadata—information about the datasets. For each dataset ingested and processed, metadata such as column descriptions, data types, sources, and schema versions were documented. This metadata not only enhances transparency but also empowers users across teams (e.g., analysts, engineers, auditors) to discover, understand, and use the data effectively.
+
+By providing a centralized data inventory, the Data Catalog serves as a data discovery hub, helping avoid duplication, supporting data lineage tracking, and encouraging secure collaboration within and across departments.
+
+# 🧪 Data Quality Checks and Governance Rules
+To ensure high-quality data, specific governance rules were enforced as part of the ETL process using AWS Glue:
+
+  - Completeness	"name" field ≥ 95% populated
+  - Uniqueness	"remuneration" field > 99% unique values
+  - Freshness	"year" field must be within last 1500 days
+These thresholds were incorporated into the transformation phase of the ETL workflow to ensure only high-quality, up-to-date data progresses through the pipeline. Any datasets that failed to meet these criteria were flagged and separated for review.
+
+# 🔄 Automated ETL Pipeline
+An automated ETL (Extract, Transform, Load) pipeline was designed and implemented using AWS Glue to streamline data processing and reduce human errors:
+
+  1. Extraction Phase:
+    - Data is extracted from Amazon S3 (transformed bucket), representing cleaned datasets ready for final checks.
+    - This stage ensures a consistent and repeatable data retrieval process.
+
+  2. Transformation Phase:
+    - The extracted data is subjected to cleaning, enrichment, and quality validation based on the governance rules mentioned above.
+    - AWS Glue jobs are used to apply transformations and validate fields according to the defined governance framework.
+
+  3. Loading Phase:
+    - After validation, datasets are automatically sorted into organized S3 folders:
+      - ✅ Passed folder: Data that meets all quality checks and is ready for summarization or analysis.
+      - ❌ Failed folder: Data that fails validation and requires review or remediation.
+
+This folder-based classification in Amazon S3 supports traceability, accountability, and continuous improvement by making it easy to identify and investigate problematic data records.
+
+# ⚙️ Governance Benefits
+  - ✅ Consistency: Standardized schemas and transformation rules ensure uniformity across datasets.
+
+  - ✅ Trustworthiness: Only validated data enters the analysis layer, improving confidence in results.
+
+  - ✅ Auditability: Clear lineage and versioning provide historical insight and support compliance.
+
+  - ✅ Automation: Reduces manual intervention, speeds up processing, and supports scale.
+
+  - ✅ Enablement for Advanced Analytics: Well-governed data lays the foundation for future use cases such as predictive modeling, ML pipelines, and real-time dashboards.
+
+Figure 2.13: ETL Pipeline for Data Quality Control
+![Screenshot (70)](https://github.com/user-attachments/assets/5b187ab0-44c9-40e9-b2fb-2c4e3cef30f5)
+
+Figure 2.14: Failed Folder in S3 Transformed Bucket
+![Screenshot (72)](https://github.com/user-attachments/assets/4e45859e-440c-44e4-affb-bf55c1a49a1d)
+
+Figure 2.15: Passed Folder in S3 Transformed Bucket
+![Screenshot (71)](https://github.com/user-attachments/assets/1444ecd3-a78a-43fc-b91a-831980b80492)
+
 
 
 ## 🧱 Platform Architecture
