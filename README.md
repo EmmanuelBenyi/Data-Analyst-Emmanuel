@@ -1,5 +1,5 @@
 ## Data-Analyst-Emmanuel
-## 📌Project title
+## 📌PROJECT TITLE
 Design and Implementation of a Data Analytic Platform (DAP) on AWS for the City of Vancouver
 
 ## 📝Project Description
@@ -45,10 +45,10 @@ This dataset contains annual remuneration and expense records for City of Vancou
 
   - Expenses: Claimed and approved work-related expenses
 
-## ⚙️ Methodology
+## ⚙️ METHODOLOGY
 The methodology for this project follows a structured Extract-Transform-Load (ETL) approach using AWS-native services. The aim was to build a robust and scalable Data Analytic Platform (DAP) that supports descriptive analytics for the City of Vancouver's employee remuneration dataset.
 
-# 🔽 1. Data Ingestion
+# 🔽 1. DATA INGESTION
   - Tool Used: Amazon S3
 
   - The raw dataset (CSV format) was sourced from the City of Vancouver Open Data Portal and uploaded into an Amazon S3 bucket named city-vancouver-data.
@@ -74,7 +74,7 @@ Figure: 1.1 Existing file in the S3 bucket following the data ingestion process.
 > ![Screenshot (20)](https://github.com/user-attachments/assets/a318e57a-0acb-4980-a6c6-dacd549996d9)
 > - Note: A screenshot of the S3 bucket and folder structure taken from my AWS Console. Data was organized in folders based on year and server designation to ensure clarity, versioning, and scalability
 
-# 2. 🔍 Data Profiling
+# 2. 🔍 DATA PROFILING
   - Tool Used: AWS Glue DataBrew
   - The dataset was imported into AWS Glue DataBrew to assess data quality, structure, and completeness.
   - Profiling results identified data types, null values, and column distributions—crucial for planning cleaning steps.
@@ -115,7 +115,7 @@ Figure: 1.2 Data Profile Overview.
 ![Screenshot (21)](https://github.com/user-attachments/assets/c0dbaf0c-1598-477d-a624-26f2ca607a96)
 Note: A screenshot of the DataBrew profiling interface, showcasing the column summaries and profiling statistics from my AWS Console.
 
-## 🧹 3. Data Cleaning
+## 🧹 3. DATA CLEANING
   - Tool Used: AWS Glue DataBrew
   - Inconsistencies in data types were resolved (e.g., converting numeric columns to appropriate formats).
   - Columns were standardized, and unnecessary entries (e.g., duplicates) were handled.
@@ -166,7 +166,7 @@ Figure 1.4: A Successful Cleaning Job
 ![Screenshot (25)](https://github.com/user-attachments/assets/e96506a1-6780-42f7-b596-ddc373257c4a)
 Note: Screenshots of the recipe and successful cleaning job are provided in Figures 1.2 and 1.3 respectively
 
-## 🧹 3. Data Cleaning
+## 🧹 3. DATA CATALOGING
   - Tool Used: AWS Glue DataBrew
   - Inconsistencies in data types were resolved (e.g., converting numeric columns to appropriate formats).
   - Columns were standardized, and unnecessary entries (e.g., duplicates) were handled.
@@ -230,7 +230,7 @@ Figure 1.7: A Successful Crawler Job Run
 ![Screenshot (26)](https://github.com/user-attachments/assets/b4f7cf58-77bf-4069-bfea-d2a2b0a676e2)
 Note: Figures 1.5 and 1.6 show the newly created database and metadata table; Figure 1.7 illustrates the successful crawler job execution.
 
-## 📊 5. Data Summarization
+## 📊 5. DATA SUMMARIZATION
   - Tool Used: AWS Glue Visual ETL
   - The dataset was filtered and aggregated based on specific timeframes (e.g., 2020–2023).
   - Summary statistics (average remuneration, total expenses, etc.) were computed.
@@ -290,7 +290,61 @@ Each stage—from data ingestion to summarization—was strategically planned an
 
 Ultimately, this project highlights how governments and organizations can adopt cloud technologies to improve decision-making, transparency, and data accessibility—laying the groundwork for a more data-driven public service.
 
+## 6. DATA ANALYSIS
+As a part of the data analytic platform, I have worked on the analysis of yearly salary trends for the employees working within the Engineering Services department. After completing the data cleaning and cataloging steps, I queried the cleaned dataset in Amazon S3 using AWS Athena. To achieve this, I wrote an SQL query to compute the average salary, total salary paid, and the number of employees in the Engineering Services department for every year.
+
+This has allowed me to observe changes in compensation over time within the department, Journeyman-Mechanic. The topic seemed the right one for analysis since Engineering Services is a key function within the Vancouver municipality, and salary trends can provide critical information about budgeting, workforce, and operational efficiency. By collating the data based on the year, filtering the information by the department, I can meaningfully summarize it to support data-driven decision-making for the City of Vancouver.
+
+The first descriptive analysis question for this data-driven decision is to analyze the average salary or remuneration trends of City of Vancouver engineering employees earning above $75,000 annually. As depicted in figure 1.2, this trend is observed over a period of four years beginning from 2020 t0 2023 and it shows a steady increase in the average salaries over the years. From 2020 to 2023, the average salary increased more than 13%. Most of the annual compensation hikes occurred between 2022 and 2023, with an average increase of more than $6,300, mostly resulting from inflation adjustments, contractual raises, or promotion. This increasing trend seems to be affecting how high-earning employees of the city will be compensated in the future, a factor which may be put into consideration while planning budgets, human resources policies, and long-term financial strategies of the City of Vancouver
+
+Figure 2.1: Athena Query to Answer Descriptive Analysis Question I
+![Screenshot (77)](https://github.com/user-attachments/assets/e1400f87-20b9-4080-9716-c4c58197b40a)
+Note: A screenshot of the result of an SQL query to determine the average salary using my AWS Athena Console 
+
+In an attempt to answer the second description analysis question that queries the spending habits of Journeyman-Mechanics over the years. It is quite unfortunate that the City of Vancouver data team could not accurately collate the expenses of these engineering services workers over the years hence making this analysis unable to reflect the true state on the matter. However, with the little information gathered for this analysis, the year 2020 saw the average of employee expenses land at about $75, the lowest ever recorded by the dataset. In 2022, one would have experienced a phenomenal uplift with average expenses hitting around $243 thus indicating possibly increased activities, travelling, reimbursement, or operating costs that year. The average has been reduced to $89.91 in 2023, indicating either minimal expenses activity or stricter expenditure control. The trend seems non-linear, with an outlier in the year 2022, a steep rise and fall which typically imply temporary projects or minimal events in 2020, or a change in costing policy, auditing, or reporting. What sets this trend apart is its potential to measure cost control by the City of Vancouver and to bring forth the identification of budget anomalies or possibly plan the next budget for employee expenditures. Figure 2.2 summarize the trend as seen.
+
+Figure 2.1: Athena Query to Answer Descriptive Analysis Question II
+![Screenshot (78)](https://github.com/user-attachments/assets/1eb7afe8-5749-4ac2-a596-8f737bceff06)
+Note: A screenshot of the result of an SQL query to determine the average expenses using my AWS Athena Console.
+
+## 🔐 DATA SECURITY
+Implementing robust data security measures is a critical aspect of the Data Analytic Platform (DAP) developed for the City of Vancouver. Given the sensitivity of the dataset—particularly employee remuneration and other personal information—it was imperative to enforce strict controls and protections throughout the entire data lifecycle, from ingestion to transformation and summarization.
+
+🛡️ Identity and Access Management (IAM)
+To enforce access control, AWS Identity and Access Management (IAM) was utilized to define fine-grained permissions for different user roles and services. Specific IAM policies were configured to:
+
+Grant least privilege access, ensuring users and roles only have access to the exact resources they need.
+
+Restrict access to specific S3 buckets and folders (e.g., raw, transformed, and curated layers) based on user roles such as data engineer, analyst, or admin.
+
+Control access to AWS services such as Glue, Athena, and DataBrew by attaching appropriate service-level permissions to roles.
+
+This approach enhances internal data governance, limits human error, and protects against unauthorized access.
+
+🔒 Data Encryption at Rest and In Transit
+To ensure that data is protected both at rest and in transit, several layers of encryption were implemented:
+
+Encryption at Rest: All Amazon S3 buckets—city-vancouver-data (raw), city-van-data-trf-emma (transformed), and city-van-data-cur-emma (curated)—were configured with AWS Key Management Service (KMS) to enable server-side encryption (SSE-KMS). This provides an additional layer of key management and audit logging.
+
+Encryption in Transit: SSL/TLS encryption was enforced for all communications between AWS services, including data transfers between AWS Glue, Athena, and S3. This ensures that sensitive data is not exposed during transmission.
+
+📂 Versioning and Replication
+To further enhance data integrity, continuity, and recovery options:
+
+Versioning was enabled on all S3 buckets to maintain historical versions of datasets. This ensures that changes to the data are tracked over time and can be rolled back if necessary—critical for audit trails, debugging, or rollback after accidental deletions.
+
+Cross-Region Replication (CRR) or backup replication rules were configured so that each object stored in the primary S3 bucket is automatically copied to a secondary backup bucket. This provides an effective disaster recovery mechanism, supporting compliance with data retention policies and ensuring high availability of critical datasets.
+
+🧠 Security Best Practices Followed:
+IAM Role Separation: Different roles for ingestion, transformation, and analysis stages.
+
+Bucket Policies and ACLs: Applied restrictive permissions and denied public access.
+
+Logging and Monitoring: (Optional but recommended) Enable AWS CloudTrail and Amazon S3 Access Logs to track access and modifications to data resources.
+
+
 ## 🧱 Platform Architecture
+
 
 ### 🔄 Data Flow Overview
 
