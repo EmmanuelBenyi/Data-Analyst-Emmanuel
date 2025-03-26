@@ -274,6 +274,16 @@ To ensure the output is both system- and user-friendly, the summarized dataset w
     - Simplifies analysis by reducing complexity in the original dataset
     - Enables faster queries and reporting through compression and partitioning
     - Prepares data for visualization tools like Amazon QuickSight or external dashboards
+   
+  Figure 1.8: An ETL pipeline
+  ![Screenshot (15)](https://github.com/user-attachments/assets/97839f75-0404-4b7c-b3f3-87db88b59847)
+  Figure 1.9: A Summarized Data Report for System Readers
+  ![Screenshot (29)](https://github.com/user-attachments/assets/86ef2a5c-b8b3-444b-93d5-653f531c3b37)
+  Figure 1.10: A Summarized Data Report for Users 
+  ![Screenshot (30)](https://github.com/user-attachments/assets/ac1f069d-9e3d-4c05-b76b-df95f4962f69)
+
+
+
 
 ## 🧱 Platform Architecture
 
