@@ -230,7 +230,50 @@ Figure 1.7: A Successful Crawler Job Run
 ![Screenshot (26)](https://github.com/user-attachments/assets/b4f7cf58-77bf-4069-bfea-d2a2b0a676e2)
 Note: Figures 1.5 and 1.6 show the newly created database and metadata table; Figure 1.7 illustrates the successful crawler job execution.
 
+## 📊 5. Data Summarization
+  - Tool Used: AWS Glue Visual ETL
+  - The dataset was filtered and aggregated based on specific timeframes (e.g., 2020–2023).
+  - Summary statistics (average remuneration, total expenses, etc.) were computed.
+  - The output was stored in both Parquet and CSV formats in a curated S3 bucket, optimized for performance and readability.
+    
+Data Summarization marks the final and crucial step in the Data Analytic Platform (DAP) workflow. At this stage, the cleaned and cataloged data is transformed and aggregated to derive high-level insights and improve interpretability for end-users. The goal is to condense raw records into meaningful summaries using statistical computations and prepare the dataset for analysis, visualization, or reporting.
 
+In this project, AWS Glue Visual ETL (Extract, Transform, Load) was employed to perform these summarization tasks through a user-friendly interface without writing code. The outputs were stored in a curated S3 bucket named city-van-data-cur-emma, representing the final, analysis-ready dataset.
+
+  # 🧱 Process Overview
+    # 📤 1. Dataset Retrieval
+The summarization process began by retrieving the cleaned dataset from the AWS Glue Data Catalog, which ensured that the most up-to-date and validated version of the data was being used. This seamless integration with Data Catalog supports schema enforcement, data lineage tracking, and compatibility with transformation tools.
+
+    # ✂️ 2. Schema Optimization
+Before applying aggregation, the schema was reviewed and optimized:
+  - The Department column was dropped because all records belonged to a single department, which added no analytical value.
+  - The dataset was filtered to include only records between the years 2020 and 2023, focusing the analysis on recent and relevant trends.
+These preprocessing steps reduced data redundancy and improved clarity in the final report.
+
+    # 🧮 3. Aggregation and Transformation
+Using AWS Glue’s Visual ETL interface, the following summarization steps were performed:
+  - Group By Year – The dataset was grouped by the Year field to analyze trends over time.
+
+Aggregate Columns:
+  - Remuneration – Average remuneration computed per year
+  - Expenses – Average expense per year
+A Timestamp column was added dynamically to record the exact time the data was summarized, which helps in tracking data currency and processing frequency.
+These transformations resulted in a concise, year-wise summary that captures essential financial trends across the selected period.
+
+    # 📦 4. Output Formatting and Storage
+To ensure the output is both system- and user-friendly, the summarized dataset was exported in two formats:
+  - Parquet (with Snappy Compression): Used for internal system processing
+                                       Offers better performance for large-scale queries
+                                       Partitioned by Year for optimized querying in tools like Athena and Redshift Spectrum
+
+  - CSV (Uncompressed): Ideal for human consumption or simple external use
+                        Easily downloadable and readable in Excel or basic data tools
+                        Both output formats were stored in the curated S3 bucket (city-van-data-cur-emma), completing the data transformation pipeline.
+
+    # ✅ Benefits of Summarization
+    - Simplifies analysis by reducing complexity in the original dataset
+    - Enables faster queries and reporting through compression and partitioning
+    - Prepares data for visualization tools like Amazon QuickSight or external dashboards
 
 ## 🧱 Platform Architecture
 
