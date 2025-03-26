@@ -303,7 +303,7 @@ Note: A screenshot of the result of an SQL query to determine the average salary
 
 In an attempt to answer the second description analysis question that queries the spending habits of Journeyman-Mechanics over the years. It is quite unfortunate that the City of Vancouver data team could not accurately collate the expenses of these engineering services workers over the years hence making this analysis unable to reflect the true state on the matter. However, with the little information gathered for this analysis, the year 2020 saw the average of employee expenses land at about $75, the lowest ever recorded by the dataset. In 2022, one would have experienced a phenomenal uplift with average expenses hitting around $243 thus indicating possibly increased activities, travelling, reimbursement, or operating costs that year. The average has been reduced to $89.91 in 2023, indicating either minimal expenses activity or stricter expenditure control. The trend seems non-linear, with an outlier in the year 2022, a steep rise and fall which typically imply temporary projects or minimal events in 2020, or a change in costing policy, auditing, or reporting. What sets this trend apart is its potential to measure cost control by the City of Vancouver and to bring forth the identification of budget anomalies or possibly plan the next budget for employee expenditures. Figure 2.2 summarize the trend as seen.
 
-Figure 2.1: Athena Query to Answer Descriptive Analysis Question II
+Figure 2.2: Athena Query to Answer Descriptive Analysis Question II
 ![Screenshot (78)](https://github.com/user-attachments/assets/1eb7afe8-5749-4ac2-a596-8f737bceff06)
 Note: A screenshot of the result of an SQL query to determine the average expenses using my AWS Athena Console.
 
@@ -312,35 +312,59 @@ Implementing robust data security measures is a critical aspect of the Data Anal
 
 🛡️ Identity and Access Management (IAM)
 To enforce access control, AWS Identity and Access Management (IAM) was utilized to define fine-grained permissions for different user roles and services. Specific IAM policies were configured to:
-
-Grant least privilege access, ensuring users and roles only have access to the exact resources they need.
-
-Restrict access to specific S3 buckets and folders (e.g., raw, transformed, and curated layers) based on user roles such as data engineer, analyst, or admin.
-
-Control access to AWS services such as Glue, Athena, and DataBrew by attaching appropriate service-level permissions to roles.
+  - Grant least privilege access, ensuring users and roles only have access to the exact resources they need.
+  - Restrict access to specific S3 buckets and folders (e.g., raw, transformed, and curated layers) based on user roles such as data engineer, analyst, or admin.
+  - Control access to AWS services such as Glue, Athena, and DataBrew by attaching appropriate service-level permissions to roles.
 
 This approach enhances internal data governance, limits human error, and protects against unauthorized access.
 
 🔒 Data Encryption at Rest and In Transit
 To ensure that data is protected both at rest and in transit, several layers of encryption were implemented:
-
-Encryption at Rest: All Amazon S3 buckets—city-vancouver-data (raw), city-van-data-trf-emma (transformed), and city-van-data-cur-emma (curated)—were configured with AWS Key Management Service (KMS) to enable server-side encryption (SSE-KMS). This provides an additional layer of key management and audit logging.
-
-Encryption in Transit: SSL/TLS encryption was enforced for all communications between AWS services, including data transfers between AWS Glue, Athena, and S3. This ensures that sensitive data is not exposed during transmission.
+  - Encryption at Rest: All Amazon S3 buckets—city-vancouver-data (raw), city-van-data-trf-emma (transformed), and city-van-data-cur-emma (curated)—were configured with AWS Key Management Service (KMS) to enable server-side encryption (SSE-KMS). This provides an additional layer of key management and audit logging.
+  - Encryption in Transit: SSL/TLS encryption was enforced for all communications between AWS services, including data transfers between AWS Glue, Athena, and S3. This ensures that sensitive data is not exposed during transmission.
 
 📂 Versioning and Replication
 To further enhance data integrity, continuity, and recovery options:
-
-Versioning was enabled on all S3 buckets to maintain historical versions of datasets. This ensures that changes to the data are tracked over time and can be rolled back if necessary—critical for audit trails, debugging, or rollback after accidental deletions.
-
-Cross-Region Replication (CRR) or backup replication rules were configured so that each object stored in the primary S3 bucket is automatically copied to a secondary backup bucket. This provides an effective disaster recovery mechanism, supporting compliance with data retention policies and ensuring high availability of critical datasets.
+  - Versioning was enabled on all S3 buckets to maintain historical versions of datasets. This ensures that changes to the data are tracked over time and can be rolled back if necessary—critical for audit trails, debugging, or rollback after accidental deletions.
+  - Cross-Region Replication (CRR) or backup replication rules were configured so that each object stored in the primary S3 bucket is automatically copied to a secondary backup bucket. This provides an effective disaster recovery mechanism, supporting compliance with data retention policies and ensuring high availability of critical datasets.
 
 🧠 Security Best Practices Followed:
-IAM Role Separation: Different roles for ingestion, transformation, and analysis stages.
+  - IAM Role Separation: Different roles for ingestion, transformation, and analysis stages.
+  - Bucket Policies and ACLs: Applied restrictive permissions and denied public access.
+  - Logging and Monitoring: (Optional but recommended) Enable AWS CloudTrail and Amazon S3 Access Logs to track access and modifications to data resources.
 
-Bucket Policies and ACLs: Applied restrictive permissions and denied public access.
+Figure 2.3: A successfully created AWS KMS
+![Screenshot (59)](https://github.com/user-attachments/assets/661059f9-5c3a-418f-b5e3-8351083320dc)
 
-Logging and Monitoring: (Optional but recommended) Enable AWS CloudTrail and Amazon S3 Access Logs to track access and modifications to data resources.
+Figure 2.4: Data Replication Rule in S3 raw bucket (city-vancouver-data)
+![Screenshot (63)](https://github.com/user-attachments/assets/d5835701-d8e0-4f9f-81ff-4e4979d442df)
+
+Figure 2.5: Data Encryption Applied in S3 raw bucket (city-vancouver-data)
+![Screenshot (61)](https://github.com/user-attachments/assets/7c32ac3d-53a9-4026-8686-fed8ff4d07a4)
+
+Figure 2.6: Bucket Versioning enabled in S3 raw bucket (city-vancouver-data)
+![Screenshot (62)](https://github.com/user-attachments/assets/f5d880f0-661e-4fca-a7b7-fded7e8d9ea0)
+
+Figure 2.7: Bucket Versioning enabled in S3 transform bucket (city-van -data-trf-emma)
+![Screenshot (64)](https://github.com/user-attachments/assets/2bf6cba8-5802-450a-bc8e-b89dadb47b11)
+
+Figure 2.8: Data Encryption Applied in S3 transform bucket (city-van -data-trf-emma)
+![Screenshot (65)](https://github.com/user-attachments/assets/bd3a1a9b-9be5-46a4-bce4-22e8e6146fcf)
+
+Figure 2.9: Replication Rule enabled in S3 transform bucket (city-van -data-trf-emma)
+![Screenshot (66)](https://github.com/user-attachments/assets/dcd23a1f-1589-4d87-be4a-df229e6faf24)
+
+Figure 2.10: Bucket Versioning enabled in S3 curated bucket (city-van -data-cur-emma)
+![Screenshot (67)](https://github.com/user-attachments/assets/65d250b1-0179-481c-835f-e96f2e54b496)
+
+Figure 2.11: Data Encryption Applied in S3 curated bucket (city-van -data-cur-emma)
+![Screenshot (62)](https://github.com/user-attachments/assets/c5765cc6-1ceb-437f-9a08-e25de381f4b8)
+
+Figure 2.12: Replication Rules enabled in S3 curated bucket (city-van -data-cur-emma)
+![Screenshot (69)](https://github.com/user-attachments/assets/76826da1-3e39-4313-9a8c-e92d51df1659)
+
+Note: Figures 2.3 to 2.12 are screenshoots from my AWS Console illustrating the IAM roles, S3 bucket policies, encryption settings, versioning status, and replication rules configured throughout the platform.
+
 
 
 ## 🧱 Platform Architecture
