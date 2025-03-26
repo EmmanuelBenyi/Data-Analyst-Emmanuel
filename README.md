@@ -97,28 +97,74 @@ Detected Data Types:
 
 The profiling summary gave a clear picture of the dataset's structural integrity. For example:
 
-The “Year” column showed no missing values and confirmed consistent integer types across all entries.
+  - The “Year” column showed no missing values and confirmed consistent integer types across all entries.
 
-The “Remuneration” and “Expenses” columns were originally detected as double, suitable for precision, but they were later transformed for aggregation operations.
+  - The “Remuneration” and “Expenses” columns were originally detected as double, suitable for precision, but they were later transformed for aggregation operations.
 
-The categorical columns such as “Department” and “Job Title” showed a limited set of values, which is helpful for filtering and grouping in future steps.
+  - The categorical columns such as “Department” and “Job Title” showed a limited set of values, which is helpful for filtering and grouping in future steps.
 
 No major anomalies (such as null values or data type mismatches) were observed at this stage.
-
 Understanding these characteristics is crucial, as it ensures:
-
-Proper data type enforcement during cleaning
-
-Appropriate aggregation functions can be applied during summarization
-
-Effective visualizations and statistical insights can be generated
+  - Proper data type enforcement during cleaning
+  - Appropriate aggregation functions can be applied during summarization
+  - Effective visualizations and statistical insights can be generated
 
 The profiling job also produced a summary report, which was stored in a transformation S3 bucket named city-van-data-trf-emma. This step lays the groundwork for accurate, efficient data cleaning and transformation in the next stages of the ETL pipeline.
 
-Figure: 2.1 Data Profile Overview.
+Figure: 1.2 Data Profile Overview.
 ![Screenshot (21)](https://github.com/user-attachments/assets/c0dbaf0c-1598-477d-a624-26f2ca607a96)
 Note: A screenshot of the DataBrew profiling interface, showcasing the column summaries and profiling statistics from my AWS Console.
 
+## 🧹 3. Data Cleaning
+  - Tool Used: AWS Glue DataBrew
+  - Inconsistencies in data types were resolved (e.g., converting numeric columns to appropriate formats).
+  - Columns were standardized, and unnecessary entries (e.g., duplicates) were handled.
+  - A reusable DataBrew recipe was created and applied through a cleaning job, then stored in a transformed S3 bucket.
+Data cleaning is a vital step in the data pipeline that ensures the dataset is accurate, consistent, and suitable for analysis. In this project, AWS Glue DataBrew was used to systematically clean the Employee Remuneration and Expenses dataset after profiling revealed its structure and characteristics. Cleaning was necessary to enforce data type consistency, resolve formatting issues, and prepare the dataset for reliable transformation and analysis downstream.
+
+# 🛠️ Cleaning Process Overview
+Once the dataset city-van-emp-rem-cln-emma_part00000.csv was successfully imported into DataBrew, a custom cleaning recipe was developed to apply a series of transformation steps. These steps were recorded under the recipe name CityVanEmpRem-Prj-Emma-recipe, allowing for reusability and version control across future datasets.
+
+Key transformations and adjustments included:
+
+  - # 🔢 1. Data Type Standardization
+The Remuneration column, originally of type Double, was converted to Integer. This change ensures uniformity across financial figures, simplifies statistical calculations, and improves compatibility with downstream aggregations.
+
+The Expenses column was similarly converted from Double to Integer to align it with the Remuneration field, ensuring seamless numerical operations when both are analyzed or summarized.
+
+The conversions help prevent errors or misinterpretations in arithmetic operations, especially during aggregations (e.g., sum, average) and visualization rendering.
+
+  - # ✅ 2. Validation of Data Integrity
+After conversion, each field was validated to ensure the values were within expected ranges.
+
+No missing values, nulls, or NaNs were detected during this phase, confirming the dataset’s high integrity.
+
+Similarly, no duplicate rows were found, eliminating the need for deduplication steps.
+
+  - # 🧪 3. Schema Conformity Check
+The schema was aligned to match what would be defined in the AWS Glue Data Catalog later on.
+
+All string-type fields such as Name, Department, and Job Title were checked for formatting issues (e.g., trailing spaces or inconsistent capitalization), although none required modification in this version of the dataset.
+
+  - # 📦 4. Execution and Storage
+A DataBrew job named city-van-emp-rem-cln-emma was executed to apply the cleaning recipe to the dataset.
+
+Upon successful execution, the cleaned dataset was saved to a designated transformation S3 bucket (city-van-data-trf-emma) for further processing.
+
+The job log and outputs were reviewed to ensure successful transformation with no job errors.
+
+  - # 🔁 5. Reusability and Automation
+The cleaning recipe was built to be modular and reusable, meaning it can be applied automatically to similar datasets in the future—saving time and reducing the risk of manual errors.
+
+With minimal adjustments, this recipe can accommodate future datasets for other years or departments.
+
+This data cleaning step guarantees that the dataset meets the necessary standards for quality and consistency, which are essential for accurate data cataloging, querying, visualization, and reporting. It also ensures that subsequent stages—like summarization and dashboard integration—are based on solid, reliable data.
+
+Figure 1.3: Data Cleaning Recipe.
+![Screenshot (24)](https://github.com/user-attachments/assets/a306ee63-0ed7-4a19-b244-927cc44f3792)
+Figure 1.4: A Successful Cleaning Job
+![Screenshot (25)](https://github.com/user-attachments/assets/e96506a1-6780-42f7-b596-ddc373257c4a)
+Note: Screenshots of the recipe and successful cleaning job are provided in Figures 1.2 and 1.3 respectively
 
 
 ## 🧱 Platform Architecture
