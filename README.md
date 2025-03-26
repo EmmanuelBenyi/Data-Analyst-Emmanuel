@@ -166,6 +166,71 @@ Figure 1.4: A Successful Cleaning Job
 ![Screenshot (25)](https://github.com/user-attachments/assets/e96506a1-6780-42f7-b596-ddc373257c4a)
 Note: Screenshots of the recipe and successful cleaning job are provided in Figures 1.2 and 1.3 respectively
 
+## 🧹 3. Data Cleaning
+  - Tool Used: AWS Glue DataBrew
+  - Inconsistencies in data types were resolved (e.g., converting numeric columns to appropriate formats).
+  - Columns were standardized, and unnecessary entries (e.g., duplicates) were handled.
+  - A reusable DataBrew recipe was created and applied through a cleaning job, then stored in a transformed S3 bucket.
+    
+Once the dataset has been cleaned and validated, the next essential stage in the Data Analytic Platform (DAP) workflow is Data Cataloging. This process involves structuring and registering the dataset as metadata, enabling efficient discovery, querying, and integration with various analytics services within the AWS ecosystem.
+
+In this project, AWS Glue Data Catalog was used as the metadata repository. This service acts as a central metadata store that makes data readily accessible to tools such as AWS Athena, Amazon Redshift Spectrum, and Amazon QuickSight for querying, visualization, and reporting.
+
+# 🧱 Steps in the Data Cataloging Process
+  # 📁 1. Creating a Glue Database
+To begin cataloging, a new database was created in AWS Glue named city-van-data-catalog-emma. This database serves as a logical container that holds the metadata for one or more tables. Creating a dedicated database ensures a clean separation of datasets, facilitates management, and supports modular growth of the platform.
+
+  - 📌 This step allows for logical organization of datasets by project, source, or year.
+
+  - 📌 The database creation step is a prerequisite for managing data tables and schema definitions.
+
+  # 🔍 2. Registering the Cleaned Dataset
+Once the database was created, the cleaned dataset—stored in the transformation S3 bucket city-van-data-trf-emma—was registered as a table within this database.
+
+The table schema includes details such as:
+
+- Column names (e.g., Name, Job Title, Department, Remuneration, Expenses, Year)
+
+- Data types (e.g., String, Integer)
+
+- Data location (S3 path)
+
+This registration makes the dataset queryable via SQL-like interfaces in tools like AWS Athena, and it ensures schema consistency across tools.
+
+  # 🔄 3. Creating and Configuring a Crawler
+To automate the process of metadata extraction, a Glue Crawler was created with the identifier emp-rem-crw-emma.
+
+The crawler was configured to:
+
+  - Scan the S3 path where the cleaned dataset is stored
+
+  - Detect the schema automatically (column types, formats, partitions)
+
+  - Populate or update the metadata in the Glue Data Catalog
+
+This automation removes the need for manual schema definition and supports future data changes (e.g., schema evolution or new file uploads).
+
+After running the crawler, a metadata table was created and successfully linked to the transformation S3 bucket.
+
+  # 🧠 4. Why Data Cataloging Matters
+  - Enables schema validation and data discovery across AWS services.
+
+  - Ensures consistent data definitions for querying and reporting tools.
+
+  - Acts as the bridge between raw storage (S3) and analytical services like Athena (for SQL queries) and QuickSight (for dashboards).
+
+  - Supports partitioning, versioning, and access control through IAM and Glue policies.
+
+This step ensures that the cleaned dataset is now not just stored, but also structured and accessible, allowing both technical and non-technical users to query and explore the data seamlessly.
+Figure 1.5: A Database Created
+![Screenshot (27)](https://github.com/user-attachments/assets/cd0782f7-3d2b-408c-a2cf-46e6531c976b)
+Figure 1.6: A Detailed Data Catalog Table
+![Screenshot (14)](https://github.com/user-attachments/assets/96543116-7a95-43d6-83d3-b9db6cffedf8)
+Figure 1.7: A Successful Crawler Job Run
+![Screenshot (26)](https://github.com/user-attachments/assets/b4f7cf58-77bf-4069-bfea-d2a2b0a676e2)
+Note: Figures 1.5 and 1.6 show the newly created database and metadata table; Figure 1.7 illustrates the successful crawler job execution.
+
+
 
 ## 🧱 Platform Architecture
 
