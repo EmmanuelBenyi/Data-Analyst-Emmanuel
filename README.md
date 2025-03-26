@@ -71,8 +71,54 @@ Importantly, the file format chosen was **CSV (Comma-Separated Values)**. This f
 This step ensures that the data is securely stored in the cloud, properly organized, and readily accessible for downstream processing tasks such as profiling, transformation, and summarization.
 
 Figure: 1.1 Existing file in the S3 bucket following the data ingestion process.
-> ![Data Ingestion](https://github.com/user-attachments/assets/4c553fd5-3bea-4302-9272-a068cdfac206)
+> ![Screenshot (20)](https://github.com/user-attachments/assets/a318e57a-0acb-4980-a6c6-dacd549996d9)
 > - Note: A screenshot of the S3 bucket and folder structure taken from my AWS Console. Data was organized in folders based on year and server designation to ensure clarity, versioning, and scalability
+
+# 2. 🔍 Data Profiling
+  - Tool Used: AWS Glue DataBrew
+  - The dataset was imported into AWS Glue DataBrew to assess data quality, structure, and completeness.
+  - Profiling results identified data types, null values, and column distributions—crucial for planning cleaning steps.
+    
+Data profiling is a critical step in building a reliable and trustworthy Data Analytic Platform (DAP), as it helps to evaluate the structure, quality, completeness, and consistency of a dataset before it undergoes any transformation or analysis. In this project, profiling was performed using AWS Glue DataBrew, a visual data preparation tool that provides advanced insights into dataset characteristics without writing code.
+
+The dataset in focus—city-van-emp-rem-cln-emma_part00000.csv—was previously uploaded to the Amazon S3 raw bucket (city-vancouver-data). This raw dataset was imported into AWS Glue DataBrew where a profiling job was created and executed to inspect the dataset’s schema, data types, missing values, outliers, and distributions.
+
+# 📊 Profiling Insights:
+  - Total Records: 508 rows
+  - Total Columns: 6
+
+Detected Data Types:
+
+  - 🟦 Year: Integer – Represents the calendar year of the remuneration data
+
+  - 🟨 Remuneration & Expenses: Double – Numerical columns storing monetary values
+
+  - 🟩 Name, Department, Job Title: String – Text fields describing employee attributes
+
+The profiling summary gave a clear picture of the dataset's structural integrity. For example:
+
+The “Year” column showed no missing values and confirmed consistent integer types across all entries.
+
+The “Remuneration” and “Expenses” columns were originally detected as double, suitable for precision, but they were later transformed for aggregation operations.
+
+The categorical columns such as “Department” and “Job Title” showed a limited set of values, which is helpful for filtering and grouping in future steps.
+
+No major anomalies (such as null values or data type mismatches) were observed at this stage.
+
+Understanding these characteristics is crucial, as it ensures:
+
+Proper data type enforcement during cleaning
+
+Appropriate aggregation functions can be applied during summarization
+
+Effective visualizations and statistical insights can be generated
+
+The profiling job also produced a summary report, which was stored in a transformation S3 bucket named city-van-data-trf-emma. This step lays the groundwork for accurate, efficient data cleaning and transformation in the next stages of the ETL pipeline.
+
+Figure: 2.1 Data Profile Overview.
+![Screenshot (21)](https://github.com/user-attachments/assets/c0dbaf0c-1598-477d-a624-26f2ca607a96)
+Note: A screenshot of the DataBrew profiling interface, showcasing the column summaries and profiling statistics from my AWS Console.
+
 
 
 ## 🧱 Platform Architecture
