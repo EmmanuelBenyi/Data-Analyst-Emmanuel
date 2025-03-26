@@ -53,7 +53,6 @@ The methodology for this project follows a structured Extract-Transform-Load (ET
 
   - The raw dataset (CSV format) was sourced from the City of Vancouver Open Data Portal and uploaded into an Amazon S3 bucket named city-vancouver-data.
 
-
 Data ingestion is the foundational step in developing the **Data Analytic Platform (DAP)** for the City of Vancouver. It involves importing raw data into a cloud environment for processing and analysis. In this project, the dataset titled **“Employee Remuneration and Expenses (Earning Over $75,000)”**, sourced from the [City of Vancouver Open Data Portal](https://opendata.vancouver.ca/), was selected for analysis due to its rich insights into public employee compensation trends.
 
 To begin, I logged into the **AWS Management Learner Lab Console** and navigated to the **Amazon S3** service—Amazon's scalable object storage solution. I initiated the ingestion process by creating a new bucket named **`city-vancouver-data`**, ensuring the name was unique across the AWS region. The selected region for storage was **US East (N. Virginia)**, which offers high availability and compatibility with other AWS services used in this project.
@@ -71,8 +70,9 @@ Importantly, the file format chosen was **CSV (Comma-Separated Values)**. This f
 
 This step ensures that the data is securely stored in the cloud, properly organized, and readily accessible for downstream processing tasks such as profiling, transformation, and summarization.
 
-> 📸 *A screenshot of the S3 bucket and folder structure is included in Figure 3 below.*
-> - Data was organized in folders based on year and server designation to ensure clarity, versioning, and scalability.![Data Ingestion](https://github.com/user-attachments/assets/4c553fd5-3bea-4302-9272-a068cdfac206)
+Figure: 1.1 Existing file in the S3 bucket following the data ingestion process.
+> ![Data Ingestion](https://github.com/user-attachments/assets/4c553fd5-3bea-4302-9272-a068cdfac206)
+> - Note: A screenshot of the S3 bucket and folder structure taken from my AWS Console. Data was organized in folders based on year and server designation to ensure clarity, versioning, and scalability
 
 
 ## 🧱 Platform Architecture
