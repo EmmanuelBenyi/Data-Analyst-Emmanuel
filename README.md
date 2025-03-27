@@ -593,6 +593,10 @@ These are stored and made accessible to analytics services like AWS Athena (for 
 | Data Cleaning | AWS Glue DataBrew | Standardize and clean inconsistencies |
 | Data Cataloging | AWS Glue Catalog | Organize metadata and schema |
 | Data Summarization | AWS Glue ETL | Generate aggregate reports and visuals |
+| Data Analysis | AWS Athena | Use SQL to query datasets |
+| Data Security | AWS KMS & IAM | Assign roles and restricts accessibility to authorized users |
+| Data Governance | AWS Glue ETL | Provide data quality checks and ensures freshness of datasets |
+| Data Monitoring | AWS CloudWatch & CloudTrail | Monitors AWS Glue jobs and S3 Buckets in realtime | 
 
 ---
 
