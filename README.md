@@ -497,8 +497,92 @@ By deploying real-time and historical monitoring tools, the City of Vancouver’
 
 ## 🧱 Platform Architecture
 
+## 🖼️ Visual Architecture & Data Insights
+
+### 🏗️ Platform Architecture Diagram
+Figure 2.18: DAP diagram in Draw.io
+![Screenshot (7)](https://github.com/user-attachments/assets/f691fc5c-7c27-4ef4-8ad6-c832538281ed)
+
+The diagram above illustrates the full **Data Analytic Platform (DAP)** implementation for the City of Vancouver, designed using draw.io. It visually represents the **end-to-end flow** from data ingestion to analytics, highlighting the key AWS services and roles involved:
+
+- **AWS EC2 Virtual Servers** host general and specific service components for employee remuneration data, including a web application layer.
+- **Amazon S3** is used for multi-stage data storage: raw ingestion, transformation outputs, and curated summaries.
+- **AWS Glue DataBrew** is used to profile and clean incoming CSV datasets.
+- **AWS Glue ETL Jobs** automate data transformation and summarization workflows, using metadata rules for data quality validation.
+- **AWS Glue Data Catalog** acts as a metadata layer, allowing datasets to be queried using **AWS Athena** or visualized in **Amazon QuickSight**.
+- **IAM roles** and **CloudWatch monitoring** ensure that access is secure and workflows are operationally sound.
+- Data is also partitioned and labeled in S3 by year and server (`/employee-remuneration/year=2025/server=COVS-Emma`) for efficient querying and storage management.
+
+This architecture ensures a scalable, maintainable, and secure analytics solution tailored to public-sector data governance requirements.
+
+
+
+### 📊 Sample Data Visualization
+
+Figure 2.19: A bar chart showing the maximum remuneration for City of Vancouver engineering service employees
+![Screenshot (8)](https://github.com/user-attachments/assets/a8d98f8c-0582-4469-bf06-be9931707b02)
+
+
+The image above shows a **column chart** depicting **maximum remuneration trends over time** for the *Engineering Services* department, specifically for the **Journeyman - Mechanic** title. This visualization, created using the Vancouver Open Data Portal’s analysis interface, clearly demonstrates a consistent upward trend in compensation between **2008 and 2023**.
+
+#### Key Highlights:
+- **X-axis:** Represents the year
+- **Y-axis:** Shows the maximum recorded salary per year
+- **Filtered by:** Department = Engineering Services, Title = Journeyman - Mechanic
+  
+The chart supports decision-makers by revealing salary growth trends and potential areas for policy adjustments or budget forecasting.
+
+
+### 🔍 Importance of Visualization & Architecture
+
+Combining a well-structured data architecture with clear, visual representations of trends enables:
+- **Informed decision-making**
+- **Policy evaluation** based on actual trends
+- **Improved transparency** in public sector compensation
+- **Scalability** to extend the analysis to other departments or data domains
+
+
 
 ### 🔄 Data Flow Overview
+
+The data analytic platform is built on a modular pipeline architecture that allows for the seamless flow of data from multiple input sources to final analytical outputs. This end-to-end pipeline leverages key AWS services to ensure scalability, automation, and data quality throughout the lifecycle. Here's a breakdown of the data flow:
+
+  📥 1. Data Ingestion from Multiple Sources
+The system is designed to collect data from a variety of input sources, including:
+
+  - CSV files exported from internal systems or open data portals
+
+  - Relational databases such as MySQL or PostgreSQL via data connectors (optional future integration)
+
+  - Cloud APIs or third-party services (e.g., HR platforms or finance systems)
+
+This diverse sourcing enables the platform to accommodate structured and semi-structured data from various departments within the City of Vancouver.
+
+All ingested data is stored in Amazon S3, specifically in a well-structured bucket (city-vancouver-data) that organizes files by year and processing context (e.g., /employee-remuneration/year=2025/server=COVS-Emma). This structure supports traceability, easy partitioning, and optimized access.
+
+  🧹 2. Data Cleaning and Transformation
+Once the data is ingested, it is passed through AWS Glue DataBrew, a visual, no-code tool used for:
+
+  - Profiling the dataset to identify data types, distributions, and missing values
+  - Detecting and resolving data quality issues such as inconsistencies, duplicates, and null entries
+  - Applying custom transformation recipes that prepare the dataset for analysis
+
+This step ensures that only validated and standardized data proceeds through the pipeline.
+
+  📦 3. Data Storage and Layered Architecture
+The cleaned dataset is saved back into Amazon S3 in a transformed bucket (city-van-data-trf-emma). After summarization and final processing, it is stored in a curated bucket (city-van-data-cur-emma) in both CSV and Parquet formats to support different use cases:
+  - Parquet for performance-optimized querying with Athena or Redshift
+  - CSV for human-readable outputs and reporting
+    
+Each layer of storage—raw, transformed, and curated—follows a clear directory structure that supports data versioning, partitioning, and backup.
+
+  📚 4. Metadata Management and Cataloging
+To support data discovery and governance, all processed datasets are registered in the AWS Glue Data Catalog. Metadata such as:
+  - Column names and data types
+  - Table structure
+  - Source and update frequency
+
+These are stored and made accessible to analytics services like AWS Athena (for SQL queries) and Amazon QuickSight (for dashboards). A Glue Crawler is configured to scan the updated data in S3 and automatically update the catalog when new files are added.
 
 
 ### 📊 Key Components
