@@ -307,7 +307,7 @@ Figure 2.2: Athena Query to Answer Descriptive Analysis Question II
 ![Screenshot (78)](https://github.com/user-attachments/assets/1eb7afe8-5749-4ac2-a596-8f737bceff06)
 Note: A screenshot of the result of an SQL query to determine the average expenses using my AWS Athena Console.
 
-## 🔐 DATA SECURITY
+## 7. 🔐 DATA SECURITY
 Implementing robust data security measures is a critical aspect of the Data Analytic Platform (DAP) developed for the City of Vancouver. Given the sensitivity of the dataset—particularly employee remuneration and other personal information—it was imperative to enforce strict controls and protections throughout the entire data lifecycle, from ingestion to transformation and summarization.
 
 🛡️ Identity and Access Management (IAM)
@@ -367,7 +367,7 @@ Note: Figures 2.3 to 2.12 are screenshoots from my AWS Console illustrating the 
 
 These security configurations not only comply with cloud data protection standards but also align with the City of Vancouver’s need for confidentiality, integrity, and availability of sensitive employee data. The layered security approach ensures that data is protected across all touchpoints—making the platform trustworthy and enterprise-ready.
 
-### 🧭 DATA GOVERNANCE
+### 8. 🧭 DATA GOVERNANCE
 Data governance is a foundational pillar of any reliable data platform, ensuring that data is accurate, consistent, discoverable, secure, and trustworthy across its lifecycle. In the context of this project, implementing strong data governance practices was essential for enabling informed decision-making and fostering confidence in the analytics outcomes delivered to the City of Vancouver.
 
 # 📚 Metadata Management with AWS Glue Data Catalog
@@ -420,7 +420,79 @@ Figure 2.14: Failed Folder in S3 Transformed Bucket
 
 Figure 2.15: Passed Folder in S3 Transformed Bucket
 ![Screenshot (71)](https://github.com/user-attachments/assets/1444ecd3-a78a-43fc-b91a-831980b80492)
+Note: Theses screenshots (Figures 2.13 - 2.15) from my AWS Console illustrate how governance is enforced through metadata, rule application, and folder-based output segmentation in S3.
 
+With governance deeply integrated into the platform design, the City of Vancouver can be confident in the reliability, traceability, and utility of the insights generated through this system—ensuring responsible data stewardship and long-term sustainability.
+
+
+### 9. 📡 DATA MONITORING
+In any data analytics environment—especially one that serves critical public sector operations—continuous monitoring is essential for ensuring the reliability, performance, security, and integrity of data workflows. For the Data Analytic Platform (DAP) built for the City of Vancouver, a comprehensive data monitoring strategy was implemented using AWS-native services, including Amazon CloudWatch and AWS CloudTrail.
+
+# 📊 Real-Time Monitoring with Amazon CloudWatch
+Amazon CloudWatch was configured to oversee and track the behavior of key components in the platform, primarily focusing on AWS Glue jobs and Amazon S3 buckets.
+
+Key features and metrics monitored:
+
+  # AWS Glue Jobs:
+    - Job execution status (success/failure)
+    - Duration of ETL runs
+    - Error logs and exceptions
+    - Job retries and failure rates
+    - Start and end timestamps for job steps
+
+  # S3 Buckets:
+    - Bucket size and object count over time
+    - Monitoring of storage costs and growth trends
+    - Alerts on unauthorized access or unusually high data write volumes
+
+  # Custom CloudWatch Alarms were created to proactively flag issues such as:
+    - Glue job failures
+    - ETL jobs exceeding expected runtime thresholds
+    - Ingestion delays or missing scheduled executions
+    - Storage thresholds being approached in critical S3 buckets
+
+These alarms were configured to trigger notifications via Amazon SNS (Simple Notification Service), ensuring that issues are brought to attention in real-time, reducing downtime or data processing lags.
+
+# 🔐 User Activity Tracking with AWS CloudTrail
+While CloudWatch monitors service performance and operations, AWS CloudTrail was activated to track user and API-level activity across the platform. This included:
+
+  - Logging of user logins, role assumptions, and policy changes
+  - Monitoring of API calls made to services such as S3, Glue, Athena, IAM, etc.
+  - Capturing changes to bucket permissions, data access patterns, and IAM role usage
+
+CloudTrail provided an audit trail that is invaluable for:
+  - Troubleshooting and Root Cause Analysis: Quickly identifying the origin of an error or unauthorized change
+  - Compliance and Data Integrity: Demonstrating adherence to security and governance policies
+  - Access Forensics: Verifying who accessed what data, when, and from where
+
+# 📈 Dashboarding and Automation
+To visualize platform performance and maintain a centralized view, CloudWatch Dashboards were created to present real-time metrics and historical trends. These dashboards included:
+
+  - ETL job duration trends over time
+  - Frequency of job failures
+  - Data ingestion volumes per day
+  - Alert history and system uptime
+
+Threshold-based triggers were also set up for automated responses, such as:
+  - Initiating fallback Glue jobs on failure
+  - Sending notifications to administrators or analysts
+  - Marking data as stale when ingestion jobs are delayed beyond set limits
+
+# ✅ Benefits of Data Monitoring
+  - Early Problem Detection: Identify and resolve errors before they impact users or downstream processes.
+  - Performance Optimization: Track and analyze job duration to reduce runtime and improve efficiency.
+  - Security and Compliance: Maintain visibility into all actions across the platform to ensure accountability.
+  - Data Freshness Assurance: Monitoring ingestion frequency ensures that stakeholders always have access to current and reliable data.
+
+Figure 2.16: An Implemented CloudWatch Dashboard
+![Screenshot (80)](https://github.com/user-attachments/assets/17d6c488-3b83-4241-806e-9be93892c504)
+
+Figure 2.17: An Implemented CloudTrail log
+![Screenshot (74)](https://github.com/user-attachments/assets/c00f17e1-2d31-4440-86b7-906010069be8)
+
+Note: These screenshots (Figures 2.16 and 2.16) from my AWS Console provide a visual walkthrough of how CloudWatch and CloudTrail were configured to support proactive and comprehensive data monitoring.
+
+By deploying real-time and historical monitoring tools, the City of Vancouver’s data analytics platform remains resilient, transparent, and secure, with full visibility into its operations—critical for maintaining trust and data quality across public-sector data initiatives.
 
 
 ## 🧱 Platform Architecture
