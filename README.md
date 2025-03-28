@@ -659,7 +659,7 @@ MBA Candidate | Data Enthusiast | Cloud Analytics Developer
 ## 📬 Contact
 📧 Email: [emmanuel_benyi@yahoo.com]  
 🔗 LinkedIn: [https://www.linkedin.com/in/emmanuel-kweku-benyi-245544150/]  
-💼 Portfolio: [your personal site if any]
+
 
 ---
 
