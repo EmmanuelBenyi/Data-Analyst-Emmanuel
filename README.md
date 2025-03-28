@@ -604,9 +604,15 @@ These are stored and made accessible to analytics services like AWS Athena (for 
 **Question:** _What are the salary trends and spending patterns for engineering service employees earning over $75,000 annually from 2020 to 2023?_
 
 Includes:
-- Annual salary and expense trends
-- Departmental breakdowns
-- Statistical summaries
+- Annual average salary and expense trends
+| Year | Average Salary (CAD) |
+|------|-----------------------|
+| 2020 | 90,229.38             |
+| 2021 | 94,910.93             |
+| 2022 | 97,236.69             |
+| 2023 | 103,556.73            |
+
+
 
 ---
 
