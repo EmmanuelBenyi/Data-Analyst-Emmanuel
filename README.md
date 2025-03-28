@@ -612,16 +612,14 @@ Includes:
 | 2022 | 97,236.69             |
 | 2023 | 103,556.73            |
 
+| Year | Average Expenses (CAD) |
+|------|-------------------------|
+| 2020 | 75.14                   |
+| 2022 | 242.91                  |
+| 2023 | 89.91                   |
 
 
----
 
-## 📸 Screenshots
-> 📍 _All implementation steps include screenshots in the main report file._  
-- AWS S3 bucket setup  
-- DataBrew profiling & cleaning  
-- AWS Glue Catalog and Crawlers  
-- ETL workflows and output samples
 
 ---
 
