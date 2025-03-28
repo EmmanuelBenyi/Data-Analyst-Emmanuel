@@ -605,12 +605,14 @@ These are stored and made accessible to analytics services like AWS Athena (for 
 
 Includes:
 - Annual average salary and expense trends
+  
 | Year | Average Salary (CAD) |
 |------|-----------------------|
 | 2020 | 90,229.38             |
 | 2021 | 94,910.93             |
 | 2022 | 97,236.69             |
 | 2023 | 103,556.73            |
+
 
 | Year | Average Expenses (CAD) |
 |------|-------------------------|
