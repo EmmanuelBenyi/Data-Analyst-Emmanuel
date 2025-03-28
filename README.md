@@ -637,20 +637,90 @@ A monthly AWS cost estimate was generated using the **AWS Pricing Calculator**, 
 - **AWS Glue DataBrew**: Data Profiling & Cleaning
 - **AWS Glue Catalog**: Metadata Management
 - **AWS Glue ETL (Visual)**: Data Transformation
-- **Python (optional)**: Data validation/scripting
+
 
 ---
 
-## 📄 Report
-The full technical report is included in this repository:
-📘 `Data Analytic Platform COV - Emmanuel.docx`
 
----
 
 ## 🚀 Future Enhancements
 - Integrate with AWS Athena or QuickSight for real-time querying & dashboards
 - Incorporate API data sources
 - Schedule automated jobs using AWS Lambda
+
+# 🧪 Evaluation of the Data Analytic Platform (DAP) Based on AWS Operational Excellence Principles
+The Data Analytic Platform (DAP) developed for the City of Vancouver leverages a robust suite of AWS services to automate, scale, and secure municipal data analytics. Grounded in the AWS Well-Architected Framework, this project primarily aligns with the Operational Excellence Pillar, which emphasizes the ability to monitor, adapt, and continuously improve operations to deliver consistent business value.
+
+According to AWS (2024), “Operational Excellence focuses on the ability to run and monitor systems to deliver business value and to continually improve supporting processes and procedures.” This evaluation reflects the extent to which the DAP project satisfies these principles, using the key design tenets outlined in Module 9 of the AWS Cloud Practitioner Essentials course: automation, observability, responsiveness to events, and the definition of standards for consistent operations.
+
+  # ✅ Practices Implemented in the DAP Project
+The DAP incorporates a variety of operational excellence best practices, demonstrating a strong foundation in automated data processing, system observability, and accountability.
+
+  🔁 1. Automation of Data Workflows
+    - Service Used: AWS Glue and AWS Glue DataBrew
+
+    - ETL pipelines were automated using AWS Glue jobs, eliminating the need for manual extraction, transformation, and loading.
+
+    - Data profiling and cleaning were performed using reusable DataBrew recipes, supporting repeatability and reducing errors.
+
+    - Automation ensures that newly uploaded datasets can be processed with minimal intervention, increasing reliability and consistency.
+
+  # 📊 2. System Monitoring and Observability
+    - Service Used: Amazon CloudWatch
+
+    - CloudWatch dashboards were configured to monitor:
+      - Glue job execution times
+      - S3 bucket growth trends
+      - Job success/failure status
+
+    - Alarms were set to alert on long-running or failed ETL jobs, helping ensure operational responsiveness and minimizing downtime.
+
+  # 🔐 3. Governance and Traceability
+    - Service Used: AWS CloudTrail (partially implemented)
+
+    - CloudTrail was enabled to capture API calls and user activities across AWS services. This enhances traceability and supports post-event auditing.
+
+    - AWS Glue Data Catalog was used to organize metadata, and data was labeled and partitioned using clear naming conventions and directory structures.
+
+    - Data access was controlled via IAM roles, enabling fine-grained permissions for different user types (e.g., analysts vs. administrators).
+
+  # 🧱 4. Initial Steps Toward Infrastructure Standardization
+While infrastructure-as-code (IaC) was not fully implemented, there were initial plans to adopt AWS CloudFormation templates to provision core resources such as:
+    - IAM policies and roles
+    - S3 buckets and folder structures
+    - Glue job definitions
+
+This is an essential step toward building reproducible environments and consistent deployment pipelines.
+
+# ⚠️ Gaps and Areas for Improvement
+Despite its strengths, the platform presents notable gaps when evaluated against the full scope of AWS’s Operational Excellence Pillar:
+
+  # 🔄 1. Lack of a Continuous Improvement Process
+    - There is no formal mechanism for ongoing review or retrospective analysis of system performance, incidents, or failures.
+
+    - AWS recommends implementing feedback loops to regularly evaluate operational outcomes and evolve based on metrics and postmortems.
+
+    - The platform would benefit from establishing a monthly or quarterly review process to drive operational tuning.
+
+  # 🚧 2. Absence of Change Management and Risk Mitigation
+While automation is in place, there is no use of formal change management practices such as:
+  - Version control for job scripts or configurations
+  - Pre-deployment testing environments
+  - Rollback mechanisms in case of deployment failure
+
+These are vital to reduce the operational risk when modifying pipelines, updating IAM policies, or deploying new datasets.
+
+  # 📓 3. No Runbooks or Operational Playbooks
+The project lacks standard operating procedures (SOPs) in the form of runbooks or playbooks.
+
+These documents are essential for:
+    - Onboarding new team members
+    - Providing step-by-step guidance during outages or incidents
+    - Standardizing response across operators
+
+Adding a playbook repository (e.g., in GitHub) with clear instructions for common issues and escalation steps would greatly enhance operational resilience.
+
+By addressing these areas, the DAP will evolve from a functional analytics platform into a fully mature, continuously improving operational environment—aligned with the core values of the AWS Well-Architected Framework and capable of serving the City of Vancouver’s data needs for years to come.
 
 ---
 
