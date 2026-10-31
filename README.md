@@ -1,4 +1,13 @@
 ## Data-Analyst-Emmanuel
+
+## 📊 Findings at a Glance
+**Analysis question:** What are the salary trends and spending patterns for Engineering Services employees earning over $75,000 annually from 2020 to 2023?
+
+- **Average salary rose every year**, from $90,229.38 in 2020 to $103,556.73 in 2023, with the largest single-year increase between 2022 and 2023.
+- **Average expenses were uneven:** $75.14 in 2020, $242.91 in 2022 (an outlier year), and $89.91 in 2023. Treat the expenses trend as indicative only: as noted below, the City of Vancouver data team could not accurately collate expenses for these workers, so the expenses figures do not fully reflect the true state of spending. (The original analysis published no 2021 expenses row; reproducing it from the live data gives $20.50 — see below.)
+- **Scope:** The dataset as originally analyzed covers 2008–2023 (the live portal file now extends to 2025); the analysis focuses on 2020–2023, filtered to a single department (Engineering Services) and job title (Journeyman-Mechanic).
+- **Reproducible:** A Python script (`analysis.py`) reproduces the yearly tables and charts from the public dataset — see "Reproduce the Analysis" below, including notes on where the live data now differs (notably 2022 expenses). The full AWS platform walkthrough follows.
+
 ## 📌PROJECT TITLE
 Design and Implementation of a Data Analytic Platform (DAP) on AWS for the City of Vancouver
 
@@ -164,13 +173,13 @@ Figure 1.3: Data Cleaning Recipe.
 ![Screenshot (24)](https://github.com/user-attachments/assets/a306ee63-0ed7-4a19-b244-927cc44f3792)
 Figure 1.4: A Successful Cleaning Job
 ![Screenshot (25)](https://github.com/user-attachments/assets/e96506a1-6780-42f7-b596-ddc373257c4a)
-Note: Screenshots of the recipe and successful cleaning job are provided in Figures 1.2 and 1.3 respectively
+Note: Screenshots of the recipe and successful cleaning job are provided in Figures 1.3 and 1.4 respectively
 
-## 🧹 3. DATA CATALOGING
-  - Tool Used: AWS Glue DataBrew
-  - Inconsistencies in data types were resolved (e.g., converting numeric columns to appropriate formats).
-  - Columns were standardized, and unnecessary entries (e.g., duplicates) were handled.
-  - A reusable DataBrew recipe was created and applied through a cleaning job, then stored in a transformed S3 bucket.
+## 🧹 4. DATA CATALOGING
+  - Tool Used: AWS Glue Data Catalog
+  - A Glue database (city-van-data-catalog-emma) was created to hold the dataset's metadata.
+  - The cleaned dataset was registered as a table, with its schema, data types, and S3 location recorded.
+  - A Glue Crawler (emp-rem-crw-emma) was configured to scan the S3 path and keep the catalog updated.
     
 Once the dataset has been cleaned and validated, the next essential stage in the Data Analytic Platform (DAP) workflow is Data Cataloging. This process involves structuring and registering the dataset as metadata, enabling efficient discovery, querying, and integration with various analytics services within the AWS ecosystem.
 
@@ -293,15 +302,15 @@ Ultimately, this project highlights how governments and organizations can adopt 
 ## 6. DATA ANALYSIS
 As a part of the data analytic platform, I have worked on the analysis of yearly salary trends for the employees working within the Engineering Services department. After completing the data cleaning and cataloging steps, I queried the cleaned dataset in Amazon S3 using AWS Athena. To achieve this, I wrote an SQL query to compute the average salary, total salary paid, and the number of employees in the Engineering Services department for every year.
 
-This has allowed me to observe changes in compensation over time within the department, Journeyman-Mechanic. The topic seemed the right one for analysis since Engineering Services is a key function within the Vancouver municipality, and salary trends can provide critical information about budgeting, workforce, and operational efficiency. By collating the data based on the year, filtering the information by the department, I can meaningfully summarize it to support data-driven decision-making for the City of Vancouver.
+This has allowed me to observe changes in compensation over time within the department, Journeyman-Mechanic. The topic seemed the right one for analysis since Engineering Services is a key function within the Vancouver municipality, and salary trends can provide critical information about budgeting, workforce, and operational efficiency.
 
-The first descriptive analysis question for this data-driven decision is to analyze the average salary or remuneration trends of City of Vancouver engineering employees earning above $75,000 annually. As depicted in figure 1.2, this trend is observed over a period of four years beginning from 2020 t0 2023 and it shows a steady increase in the average salaries over the years. From 2020 to 2023, the average salary increased more than 13%. Most of the annual compensation hikes occurred between 2022 and 2023, with an average increase of more than $6,300, mostly resulting from inflation adjustments, contractual raises, or promotion. This increasing trend seems to be affecting how high-earning employees of the city will be compensated in the future, a factor which may be put into consideration while planning budgets, human resources policies, and long-term financial strategies of the City of Vancouver
+The first descriptive analysis question for this data-driven decision is to analyze the average salary or remuneration trends of City of Vancouver engineering employees earning above $75,000 annually. As shown in Figure 2.1, this trend is observed over a period of four years beginning from 2020 to 2023 and it shows a steady increase in the average salaries over the years. From 2020 to 2023, the average salary increased more than 13%. Most of the annual compensation hikes occurred between 2022 and 2023, with an average increase of more than $6,300. Possible factors include inflation adjustments, contractual raises, or promotions — the data itself does not establish the cause, so this is interpretation, not a finding. This increasing trend seems to be affecting how high-earning employees of the city will be compensated in the future, a factor which may be put into consideration while planning budgets, human resources policies, and long-term financial strategies of the City of Vancouver
 
 Figure 2.1: Athena Query to Answer Descriptive Analysis Question I
 ![Screenshot (77)](https://github.com/user-attachments/assets/e1400f87-20b9-4080-9716-c4c58197b40a)
 Note: A screenshot of the result of an SQL query to determine the average salary using my AWS Athena Console 
 
-In an attempt to answer the second description analysis question that queries the spending habits of Journeyman-Mechanics over the years. It is quite unfortunate that the City of Vancouver data team could not accurately collate the expenses of these engineering services workers over the years hence making this analysis unable to reflect the true state on the matter. However, with the little information gathered for this analysis, the year 2020 saw the average of employee expenses land at about $75, the lowest ever recorded by the dataset. In 2022, one would have experienced a phenomenal uplift with average expenses hitting around $243 thus indicating possibly increased activities, travelling, reimbursement, or operating costs that year. The average has been reduced to $89.91 in 2023, indicating either minimal expenses activity or stricter expenditure control. The trend seems non-linear, with an outlier in the year 2022, a steep rise and fall which typically imply temporary projects or minimal events in 2020, or a change in costing policy, auditing, or reporting. What sets this trend apart is its potential to measure cost control by the City of Vancouver and to bring forth the identification of budget anomalies or possibly plan the next budget for employee expenditures. Figure 2.2 summarize the trend as seen.
+In an attempt to answer the second descriptive analysis question that queries the spending habits of Journeyman-Mechanics over the years. It is quite unfortunate that the City of Vancouver data team could not accurately collate the expenses of these engineering services workers over the years hence making this analysis unable to reflect the true state on the matter. However, with the little information gathered for this analysis, the year 2020 saw the average of employee expenses land at about $75, the lowest ever recorded by the dataset. In 2022, one would have experienced a phenomenal uplift with average expenses hitting around $243 thus indicating possibly increased activities, travelling, reimbursement, or operating costs that year. The average has been reduced to $89.91 in 2023, indicating either minimal expenses activity or stricter expenditure control. The trend seems non-linear, with an outlier in the year 2022, a steep rise and fall which typically imply temporary projects or minimal events in 2020, or a change in costing policy, auditing, or reporting. What sets this trend apart is its potential to measure cost control by the City of Vancouver and to bring forth the identification of budget anomalies or possibly plan the next budget for employee expenditures. Figure 2.2 summarizes the trend.
 
 Figure 2.2: Athena Query to Answer Descriptive Analysis Question II
 ![Screenshot (78)](https://github.com/user-attachments/assets/1eb7afe8-5749-4ac2-a596-8f737bceff06)
@@ -363,7 +372,7 @@ Figure 2.11: Data Encryption Applied in S3 curated bucket (city-van -data-cur-em
 Figure 2.12: Replication Rules enabled in S3 curated bucket (city-van -data-cur-emma)
 ![Screenshot (69)](https://github.com/user-attachments/assets/76826da1-3e39-4313-9a8c-e92d51df1659)
 
-Note: Figures 2.3 to 2.12 are screenshoots from my AWS Console illustrating the IAM roles, S3 bucket policies, encryption settings, versioning status, and replication rules configured throughout the platform.
+Note: Figures 2.3 to 2.12 are screenshots from my AWS Console illustrating the IAM roles, S3 bucket policies, encryption settings, versioning status, and replication rules configured throughout the platform.
 
 These security configurations not only comply with cloud data protection standards but also align with the City of Vancouver’s need for confidentiality, integrity, and availability of sensitive employee data. The layered security approach ensures that data is protected across all touchpoints—making the platform trustworthy and enterprise-ready.
 
@@ -420,7 +429,7 @@ Figure 2.14: Failed Folder in S3 Transformed Bucket
 
 Figure 2.15: Passed Folder in S3 Transformed Bucket
 ![Screenshot (71)](https://github.com/user-attachments/assets/1444ecd3-a78a-43fc-b91a-831980b80492)
-Note: Theses screenshots (Figures 2.13 - 2.15) from my AWS Console illustrate how governance is enforced through metadata, rule application, and folder-based output segmentation in S3.
+Note: These screenshots (Figures 2.13 - 2.15) from my AWS Console illustrate how governance is enforced through metadata, rule application, and folder-based output segmentation in S3.
 
 With governance deeply integrated into the platform design, the City of Vancouver can be confident in the reliability, traceability, and utility of the insights generated through this system—ensuring responsible data stewardship and long-term sustainability.
 
@@ -490,7 +499,7 @@ Figure 2.16: An Implemented CloudWatch Dashboard
 Figure 2.17: An Implemented CloudTrail log
 ![Screenshot (74)](https://github.com/user-attachments/assets/c00f17e1-2d31-4440-86b7-906010069be8)
 
-Note: These screenshots (Figures 2.16 and 2.16) from my AWS Console provide a visual walkthrough of how CloudWatch and CloudTrail were configured to support proactive and comprehensive data monitoring.
+Note: These screenshots (Figures 2.16 and 2.17) from my AWS Console provide a visual walkthrough of how CloudWatch and CloudTrail were configured to support proactive and comprehensive data monitoring.
 
 By deploying real-time and historical monitoring tools, the City of Vancouver’s data analytics platform remains resilient, transparent, and secure, with full visibility into its operations—critical for maintaining trust and data quality across public-sector data initiatives.
 
@@ -547,16 +556,8 @@ Combining a well-structured data architecture with clear, visual representations
 
 The data analytic platform is built on a modular pipeline architecture that allows for the seamless flow of data from multiple input sources to final analytical outputs. This end-to-end pipeline leverages key AWS services to ensure scalability, automation, and data quality throughout the lifecycle. Here's a breakdown of the data flow:
 
-  📥 1. Data Ingestion from Multiple Sources
-The system is designed to collect data from a variety of input sources, including:
-
-  - CSV files exported from internal systems or open data portals
-
-  - Relational databases such as MySQL or PostgreSQL via data connectors (optional future integration)
-
-  - Cloud APIs or third-party services (e.g., HR platforms or finance systems)
-
-This diverse sourcing enables the platform to accommodate structured and semi-structured data from various departments within the City of Vancouver.
+  📥 1. Data Ingestion
+In this project, the data source is the City of Vancouver Open Data Portal CSV described above.
 
 All ingested data is stored in Amazon S3, specifically in a well-structured bucket (city-vancouver-data) that organizes files by year and processing context (e.g., /employee-remuneration/year=2025/server=COVS-Emma). This structure supports traceability, easy partitioning, and optimized access.
 
@@ -625,20 +626,36 @@ Includes:
 
 ---
 
-## 💵 Estimated Cost
-A monthly AWS cost estimate was generated using the **AWS Pricing Calculator**, accounting for:
-- S3 storage (Standard class)
-- Glue DataBrew jobs
-- Glue ETL pipelines
-- Minimal cost projections for a prototype phase
+## ▶️ Reproduce the Analysis
+The yearly tables above can be reproduced from the public dataset with the Python script in this repository — no AWS account needed.
 
----
+**Data source:** [Employee Remuneration and Expenses (Earning Over $75,000)](https://opendata.vancouver.ca/explore/dataset/employee-remuneration-and-expenses-earning-over-75000/), City of Vancouver Open Data Portal. The script downloads the CSV export directly from the portal at run time.
+
+**Run it:**
+- Requirements: Python 3, `pandas`, `matplotlib`, and internet access.
+- From this folder: `python3 analysis.py`
+- The script filters to Engineering Services / Journeyman-Mechanic, 2020–2023, prints the yearly average remuneration and average expenses tables, and regenerates the charts in `charts/` (`salary_trend.svg`, `expenses_trend.svg`). Only aggregate figures are produced — no individual records or names appear in the outputs.
+
+**Reproduced results vs the original tables (CAD):**
+| Year | Avg. salary, reproduced | Original | Avg. expenses, reproduced | Original |
+|------|-------------------------|----------|---------------------------|----------|
+| 2020 | 90,229.38 | 90,229.38 | 75.14 | 75.14 |
+| 2021 | 94,910.93 | 94,910.93 | 20.50 | (no row published) |
+| 2022 | 97,236.69 | 97,236.69 | 322.38 | 242.91 |
+| 2023 | 103,557.21 | 103,556.73 | 89.96 | 89.91 |
+
+Salary matches exactly for 2020–2022; 2023 differs by $0.48 and expenses by $0.05, consistent with small revisions in the live source since the original analysis. Two things worth knowing: the original analysis published no 2021 expenses row, but the live data gives $20.50 for 2021 (only 4 of the 42 records have a non-zero expense). And 2022 expenses cannot be reproduced from the current file: 22 of the 35 filtered 2022 records have a blank expense, so the reproduced mean rests on only 13 records — neither that mean ($322.38) nor treating blanks as zero ($119.74) matches the original $242.91. This fits the original caveat that the City's expenses for these workers could not be accurately collated.
+
+**Note on the live dataset:** the portal file now covers 2008–2025 (2024 and 2025 have been added since the original analysis), and the job title was renamed after 2023 from "Journeyman - Mechanic" to "Journeyperson - Mechanic". The script filters to 2020–2023 to stay like-for-like with the original analysis.
 
 ## 🧰 Tech Stack
 - **AWS S3**: Cloud Storage
 - **AWS Glue DataBrew**: Data Profiling & Cleaning
 - **AWS Glue Catalog**: Metadata Management
 - **AWS Glue ETL (Visual)**: Data Transformation
+- **AWS Athena**: SQL querying
+- **AWS KMS & IAM**: Encryption and access control
+- **Amazon CloudWatch & CloudTrail**: Monitoring and audit logging
 
 
 ---
@@ -728,13 +745,13 @@ By addressing these areas, the DAP will evolve from a functional analytics platf
 
 ## 🧑‍💼 Author
 **Emmanuel Kweku Benyi**  
-MBA Candidate | Data Enthusiast | Cloud Analytics Developer
+MBA, data analytics, University Canada West (2025) | Data Enthusiast | Cloud Analytics Developer
 
 ---
 
 ## 📬 Contact
 📧 Email: [emmanuel_benyi@yahoo.com]  
-🔗 LinkedIn: [https://www.linkedin.com/in/emmanuel-kweku-benyi-245544150/]  
+🔗 LinkedIn: [https://www.linkedin.com/in/emmanuelbenyi]  
 
 
 ---
