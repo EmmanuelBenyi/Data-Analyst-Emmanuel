@@ -84,11 +84,12 @@ def normalise_title(value: str) -> str:
     return str(value).strip().lower().replace("journeyperson", "journeyman")
 
 
-def load_and_filter(url: str) -> pd.DataFrame:
-    """Download the CSV, drop the name column, and apply the scope filter."""
-    with urllib.request.urlopen(url) as response:
-        raw = response.read()
-    df = pd.read_csv(io.BytesIO(raw), sep=";", encoding="utf-8-sig")
+def apply_filter(df: pd.DataFrame) -> pd.DataFrame:
+    """Drop the name column and apply the scope filter to a loaded frame.
+
+    Pure (no network): split out of load_and_filter so the filter logic
+    can be tested on synthetic data without downloading the dataset.
+    """
     # Aggregate only: discard individual identifiers before any analysis.
     df = df.drop(columns=["name"], errors="ignore")
     filtered = df[
@@ -97,6 +98,14 @@ def load_and_filter(url: str) -> pd.DataFrame:
         & (df["year"].isin(YEARS))
     ].copy()
     return filtered
+
+
+def load_and_filter(url: str) -> pd.DataFrame:
+    """Download the CSV and apply the scope filter."""
+    with urllib.request.urlopen(url) as response:
+        raw = response.read()
+    df = pd.read_csv(io.BytesIO(raw), sep=";", encoding="utf-8-sig")
+    return apply_filter(df)
 
 
 def yearly_averages(filtered: pd.DataFrame) -> pd.DataFrame:
